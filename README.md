@@ -40,12 +40,19 @@ plans with free-tier models like DeepSeek, GLM, Qwen and local Ollama models.
  - **circuit breaker** - never repeat the same failing tool call 2x (small models *will* loop)
 
 ```
-  ┌─────────────────────┐
-  "debug this leak" ──▶  code-orchestrator  ──▶  intent: debugging
-  │  (routing table)  │                                │
-  └─────────────────────┘                                ▼
-                                trace-bug → debugging-wizard → debug
-                                (~2 skills loaded, not 122)
+        "debug this leak"
+               |
+               v
+       +---------------------+
+       |  code-orchestrator  |        (the routing table)
+       +---------------------+
+               |
+               v
+        intent: debugging
+               |
+               v
+     trace-bug -> debugging-wizard -> debug
+     (~2 skills loaded, not 122)
 ```
 
 | Without orchestrator | With orchestrator |
