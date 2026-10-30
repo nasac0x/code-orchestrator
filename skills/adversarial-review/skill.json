@@ -1,6 +1,6 @@
 {
   "name": "adversarial-review",
-  "description": "Revisão adversarial profunda e isolada. Tenta REFUTAR o software (não confirmar). Executa Fase 0–8: isola, inventaria fronteiras, roda como produção, lê com perguntas de falha, compara promessa vs realidade, sonda hipóteses com scripts mínimos, classifica achados (COMPROVADO/HIPÓTESE/REFUTADO), emite relatório APROVADO/BLOQUEADO. Gatilho: toda tarefa que gere código executável. Contexto ISOLADO — sem acesso ao raciocínio do implementador. Máx. 2 rodadas.",
+  "description": "Revisão adversarial profunda e isolada. Tenta REFUTAR o software (não confirmar). Executa Fase 0-8: isola, inventaria fronteiras, roda como produção, lê com perguntas de falha, compara promessa vs realidade, sonda hipóteses com scripts mínimos, classifica achados (COMPROVADO/HIPÓTESE/REFUTADO), emite relatório APROVADO/BLOQUEADO. Gatilho: toda tarefa que gere código executável. Contexto ISOLADO - sem acesso ao raciocínio do implementador. Máx. 2 rodadas.",
   "version": "1.0.0",
   "author": "Nemotron 3 Ultra + User",
   "license": "MIT",

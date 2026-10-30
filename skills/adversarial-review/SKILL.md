@@ -1,9 +1,9 @@
 ---
 name: adversarial-review
-description: Revisão adversarial profunda e isolada. Tenta REFUTAR o software (não confirmar). Executa Fase 0–8: isola, inventaria fronteiras, roda como produção, lê com perguntas de falha, compara promessa vs realidade, sonda hipóteses com scripts mínimos, classifica achados (COMPROVADO/HIPÓTESE/REFUTADO), emite relatório APROVADO/BLOQUEADO. Gatilho: toda tarefa que gere código executável. Contexto ISOLADO — sem acesso ao raciocínio do implementador. Máx. 2 rodadas.
+description: Revisão adversarial profunda e isolada. Tenta REFUTAR o software (não confirmar). Executa Fase 0-8: isola, inventaria fronteiras, roda como produção, lê com perguntas de falha, compara promessa vs realidade, sonda hipóteses com scripts mínimos, classifica achados (COMPROVADO/HIPÓTESE/REFUTADO), emite relatório APROVADO/BLOQUEADO. Gatilho: toda tarefa que gere código executável. Contexto ISOLADO - sem acesso ao raciocínio do implementador. Máx. 2 rodadas.
 ---
 
-# Adversarial Review — Revisão que Tenta Refutar
+# Adversarial Review - Revisão que Tenta Refutar
 
 ## Princípio Fundamental
 **O revisor tenta REFUTAR o software, não confirmá-lo.** Cada afirmação "isso funciona" precisa de evidência de execução; cada suspeita precisa de uma sonda que a confirme ou refute. Refutar uma suspeita também é resultado válido e deve ser registrado.
@@ -18,9 +18,9 @@ description: Revisão adversarial profunda e isolada. Tenta REFUTAR o software (
 
 ---
 
-## O MÉTODO DO REVISOR (Fases 0–8)
+## O MÉTODO DO REVISOR (Fases 0-8)
 
-### Fase 0 — Isolar
+### Fase 0 - Isolar
 Copie o projeto para um diretório novo e trabalhe nele. Não altere o original. Scripts de sonda ficam **FORA** da pasta do projeto e são apagados depois.
 
 ```bash
@@ -29,7 +29,7 @@ cp -r /path/to/project /tmp/adversarial-review-<timestamp>
 cd /tmp/adversarial-review-<timestamp>
 ```
 
-### Fase 1 — Inventariar e Mapear Fronteiras
+### Fase 1 - Inventariar e Mapear Fronteiras
 Liste os arquivos e identifique:
 - Pontos de entrada (CLI, HTTP, handlers, jobs)
 - Scripts de build/start (`package.json`, `Makefile`, `pyproject.toml`)
@@ -49,13 +49,13 @@ Liste os arquivos e identifique:
 
 **Tudo que você investigar nas fases seguintes nasce deste mapa.**
 
-### Fase 2 — Executar Como em Produção
+### Fase 2 - Executar Como em Produção
 Antes de ler o código a fundo, rode o caminho real que um usuário rodaria, seguindo o README e os scripts do `package.json`/`pyproject.toml`:
 
 1. **Instalação limpa** (`npm ci`, `pip install -r requirements.txt`)
 2. **Typecheck/lint** (`npm run build`, `tsc --noEmit`, `ruff check`, `mypy`)
 3. **Build de produção** (artefato real, não dev)
-4. **Iniciar como em produção** (`NODE_ENV=production node dist/app.js`, `gunicorn`, `uvicorn --workers 4`) — **NÃO modo dev**
+4. **Iniciar como em produção** (`NODE_ENV=production node dist/app.js`, `gunicorn`, `uvicorn --workers 4`) - **NÃO modo dev**
 5. **Chamar de verdade** com `curl`/cliente HTTP real contra a porta exposta
 
 **Registre também:** quantos testes rodaram e quantos foram **PULADOS (skipped)** e por quê.
@@ -64,7 +64,7 @@ Antes de ler o código a fundo, rode o caminho real que um usuário rodaria, seg
 
 **Verifique que arquivos de runtime que não são código** (`.lua`, `.sql`, `.json`, templates, assets) **chegam ao artefato de build**.
 
-### Fase 3 — Ler com Perguntas de Falha (Gerar Hipóteses)
+### Fase 3 - Ler com Perguntas de Falha (Gerar Hipóteses)
 Leia fonte, testes, config e README **por inteiro**. Para **CADA item do mapa de fronteiras** aplique o banco de perguntas abaixo. Cada suspeita vira uma **HIPÓTESE numerada**, no formato:
 
 ```
@@ -91,16 +91,16 @@ H<n>: "<o que eu acho que falha>"
 | **Dados e segredos** | Segredos em log, resposta de erro ou no pacote? Defaults inseguros (sem senha/TLS)? Dependências com vulnerabilidade conhecida (`npm audit` / `pip-audit`)? |
 | **Compatibilidade** | Alguma assinatura mudou (síncrono→assíncrono, tipo de retorno) e os chamadores existentes foram atualizados? Algo que antes era chamado deixou de ser (ex.: limpeza/shutdown removido)? |
 
-### Fase 4 — Promessa vs Realidade
+### Fase 4 - Promessa vs Realidade
 Compare o que **README, docs de design e `.env.example` PROMETEM** com o que o código **FAZ**:
 - Variáveis documentadas e nunca lidas
 - Alegações ("compatível", "thread-safe", "sem race condition", "cobertura completa") sem sustentação
 - Cenários listados no design que **não existem nos testes**
 
-### Fase 5 — Dependências Reais
+### Fase 5 - Dependências Reais
 Os testes pulados e os cenários de falha só valem contra a **coisa real**. Detecte o que existe no ambiente (`which redis-server`, `docker ps`, etc.), suba a dependência localmente numa porta de teste e rode os testes que estavam pulados. Se não puder subir, **declare isso no relatório**; não finja ter verificado.
 
-### Fase 6 — Sondar Cada Hipótese
+### Fase 6 - Sondar Cada Hipótese
 Para cada **H<n>**: escreva o **MENOR script possível (fora do projeto)** que provoca o cenário, rode, compare com a previsão e **apague o script**.
 
 Exemplos de sonda:
@@ -112,7 +112,7 @@ Exemplos de sonda:
 
 **Registre a saída REAL** (stdout, stderr, código de saída, tempo, logs).
 
-### Fase 7 — Classificar com Honestidade
+### Fase 7 - Classificar com Honestidade
 Cada achado recebe **exatamente um rótulo**:
 
 | Rótulo | Definição |
@@ -123,12 +123,12 @@ Cada achado recebe **exatamente um rótulo**:
 
 **Nunca escreva "testei" ou "verifiquei" sobre algo que você só leu.**
 
-### Fase 8 — Relatório
+### Fase 8 - Relatório
 Por achado: **ID, severidade (CRÍTICA/ALTA/MÉDIA/BAIXA), rótulo, resumo, comando de prova, saída observada, esperado, teste que falha (para COMPROVADO) e correção sugerida em 1-3 linhas**. Não reescreva o código. **Máximo 12 achados, sem duplicatas**.
 
 Termine com:
-- **APROVADO** — zero CRÍTICA/ALTA comprovadas abertas
-- **BLOQUEADO** — existe ao menos uma CRÍTICA/ALTA comprovada
+- **APROVADO** - zero CRÍTICA/ALTA comprovadas abertas
+- **BLOQUEADO** - existe ao menos uma CRÍTICA/ALTA comprovada
 
 **Severidade:**
 - **CRÍTICA** = não builda/sobe ou cai em falha comum
@@ -151,13 +151,13 @@ Se restar achado CRÍTICO/ALTO após 2 rodadas → **informe o usuário**; não 
 ## Exemplo de Relatório (Template)
 
 ```markdown
-# Adversarial Review Report — <feature-name> — Rodada <1|2>
+# Adversarial Review Report - <feature-name> - Rodada <1|2>
 
 ## Veredito: BLOQUEADO | APROVADO
 
 ## Achados
 
-### H1 — COMPROVADO — CRÍTICA
+### H1 - COMPROVADO - CRÍTICA
 **Resumo:** Lua script não carrega no build de produção (arquivo .lua não incluído no dist/)
 **Comando:** `npm run build && ls dist/utils/lua/`
 **Saída:** `ls: cannot access 'dist/utils/lua/': No such file or directory`
@@ -165,13 +165,13 @@ Se restar achado CRÍTICO/ALTO após 2 rodadas → **informe o usuário**; não 
 **Teste que falha:** Integração Redis falha em produção com "script not found"
 **Correção:** Adicionar `"assets": ["src/utils/lua/**/*.lua"]` no `package.json` ou copiar no script de build
 
-### H2 — HIPÓTESE — ALTA
+### H2 - HIPÓTESE - ALTA
 **Resumo:** TTL de 10 min pode expirar bucket durante requisição longa (>10min), permitindo burst extra
 **Previsão:** Requisição de 11min com 10 req iniciais → 11ª passa (bucket recriado com capacity cheia)
 **Como provar:** Fake timer avançar 11min + 1 req → verificar allowed=true
 **O que faltou:** Fake timers não cobrem cenário de req longa real; precisa teste de integração com clock real
 
-### H3 — REFUTADO — MÉDIA
+### H3 - REFUTADO - MÉDIA
 **Resumo:** Suspeita de race condition no Redis (duas instâncias)
 **Teste:** 2 processos paralelos × 15 req cada contra mesmo IP → total allowed = 10 (correto)
 **Saída:** Atomicidade do EVALSHA confirmada
@@ -190,7 +190,7 @@ Se restar achado CRÍTICO/ALTO após 2 rodadas → **informe o usuário**; não 
 ## Checklist Rápido do Revisor (antes de emitir veredito)
 
 - [ ] Fase 0: Projeto copiado para diretório isolado
-- [ ] Fase 1: Mapa de fronteiras completo (a–e)
+- [ ] Fase 1: Mapa de fronteiras completo (a-e)
 - [ ] Fase 2: Build + execução produção + curl real funcionam
 - [ ] Fase 3: Hipóteses numeradas com previsão escrita ANTES de testar
 - [ ] Fase 4: Promessas do README vs código conferidas

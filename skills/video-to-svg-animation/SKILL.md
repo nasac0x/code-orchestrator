@@ -9,7 +9,7 @@ Goal: a small, crisp, loopable animation that *recreates* the motion with vector
 It is NOT an automatic video converter: never embed frames or base64 video. Trace the
 key artwork once, then re-animate it with vector motion.
 
-## Step 0 — ask the user for the output pipeline
+## Step 0 - ask the user for the output pipeline
 
 Before animating, **ask the user** which output they want:
 
@@ -27,7 +27,7 @@ Before animating, **ask the user** which output they want:
   - ❌ path morphing requires all keyframe paths to share the same command structure
     (painful hand work); no timeline control; fire-and-forget
 - **GSAP + MorphSVG**
-  - ✅ `morphSVG` normalizes paths automatically — morph between shapes with different
+  - ✅ `morphSVG` normalizes paths automatically - morph between shapes with different
     point counts in one line; full timeline control (pause/seek/reverse/stagger)
   - ✅ DrawSVG, easing library, scroll triggers
   - ❌ requires the library (~230 KB min) loaded in the page and the SVG **inlined**
@@ -75,7 +75,7 @@ If the user does not answer or does not care, default to **SMIL**.
 - Load `gsap.min.js` + `MorphSVGPlugin` (both free since the Webflow acquisition, 2025).
 - The SVG must be **inlined** in the HTML (or fetched and injected) so scripts run.
 - Emit a `gsap.timeline({ repeat: -1 })` with the same `(seconds, value)` pairs the
-  SMIL version would use — the verification step (Playwright) works the same way.
+  SMIL version would use - the verification step (Playwright) works the same way.
 - Delivery to the user: an `.html` snippet (inline SVG + script tags) or the SVG plus
   a JS file, since the animation no longer lives inside the `.svg` file itself.
 
@@ -106,7 +106,7 @@ Flowing, organic strokes that travel around a silhouette and *become* its outlin
 the hardest vector move. Two ways:
 
 - **GSAP (recommended):** draw the stroke in N hand-keyed states (hugging the silhouette,
-  stretching, snapping onto the outline segment) — the states do **not** need matching
+  stretching, snapping onto the outline segment) - the states do **not** need matching
   command structures. Then `tl.to("#stroke", { morphSVG: "#outline-seg", ease: "power2.inOut" })`,
   staggered per segment. MorphSVG normalizes point counts and finds the point mapping.
 - **SMIL (hard mode):** hand-build every keyframe path with the *same* command sequence
@@ -128,7 +128,7 @@ approach in SMIL and state the difference honestly.
 - Do not animate the same attribute twice on one element (e.g. opacity on a `<g>` and a child
   is fine; two `opacity` animations on the same element is not).
 - GSAP: several `gsap.to()` on the same target/property need `overwrite: "auto"` or a
-  single timeline, or tweens fight each other — same root cause, different syntax.
+  single timeline, or tweens fight each other - same root cause, different syntax.
 - Text: use a font stack (`Montserrat, 'Segoe UI', Helvetica, Arial, sans-serif`); web fonts do
   not load when the SVG is used in `<img>`. Offer converting text to paths for exact fidelity.
 - Keep the file small: round numbers to 1 decimal, avoid per-frame `keyTimes`, reuse gradients.

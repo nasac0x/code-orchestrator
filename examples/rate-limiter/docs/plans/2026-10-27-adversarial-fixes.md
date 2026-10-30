@@ -12,7 +12,7 @@
 
 ---
 
-## Task 1: H1 — Fix `npm start` (ESM imports without `.js` extension)
+## Task 1: H1 - Fix `npm start` (ESM imports without `.js` extension)
 
 **Severity:** CRITICAL  
 **Files:** Modify `tsconfig.json`, all `.ts` files with relative imports
@@ -34,7 +34,7 @@
 
 ---
 
-## Task 2: H2 — Fix Redis Down on Boot (Unhandled Rejection)
+## Task 2: H2 - Fix Redis Down on Boot (Unhandled Rejection)
 
 **Severity:** CRITICAL  
 **Files:** Modify `src/metrics/collector-redis.ts`, `src/utils/redis-token-bucket-store.ts`
@@ -49,14 +49,14 @@
       return false;
     });
   ```
-- [ ] Step 2.2: In `collector-redis.ts`, `getSnapshot()` — if not connected, return empty snapshot immediately (already does, but ensure no throw)
+- [ ] Step 2.2: In `collector-redis.ts`, `getSnapshot()` - if not connected, return empty snapshot immediately (already does, but ensure no throw)
 - [ ] Step 2.3: In `redis-token-bucket-store.ts`, apply same pattern to `this.scriptLoaded`
 - [ ] Step 2.4: Add `process.on('unhandledRejection', ...)` in `app.ts` as safety net
 - [ ] Step 2.5: Test: stop Redis → `npm run dev` → verify server starts and logs error but doesn't crash
 
 ---
 
-## Task 3: H3 — Fix X-Forwarded-For Bypass (IP Rotation)
+## Task 3: H3 - Fix X-Forwarded-For Bypass (IP Rotation)
 
 **Severity:** ALTA  
 **Files:** Modify `src/middleware/rate-limiter.ts`, `src/config/rate-limit.ts`
@@ -85,7 +85,7 @@
 
 ---
 
-## Task 4: H4 — Fix Memory Leak (Unbounded Maps/Sets)
+## Task 4: H4 - Fix Memory Leak (Unbounded Maps/Sets)
 
 **Severity:** ALTA  
 **Files:** Modify `src/metrics/collector-memory.ts`, `src/utils/memory-token-bucket-store.ts`
@@ -122,7 +122,7 @@
 
 ---
 
-## Task 5: H5 — Fix SCRIPT FLUSH / NOSCRIPT Handling
+## Task 5: H5 - Fix SCRIPT FLUSH / NOSCRIPT Handling
 
 **Severity:** ALTA  
 **Files:** Modify `src/utils/redis-token-bucket-store.ts`
@@ -158,7 +158,7 @@
 
 ---
 
-## Task 6: H6 — Fix .env Skip Paths Override
+## Task 6: H6 - Fix .env Skip Paths Override
 
 **Severity:** MÉDIA  
 **Files:** Modify `src/config/rate-limit.ts`
@@ -177,7 +177,7 @@
 
 ---
 
-## Task 7: H7 — Reduce Redis Commands per Request (~14 → ~6)
+## Task 7: H7 - Reduce Redis Commands per Request (~14 → ~6)
 
 **Severity:** MÉDIA  
 **Files:** Modify `src/metrics/collector-redis.ts`
@@ -193,7 +193,7 @@
 
 ---
 
-## Task 8: H8 — Add Auth to /api/metrics and /dashboard
+## Task 8: H8 - Add Auth to /api/metrics and /dashboard
 
 **Severity:** MÉDIA  
 **Files:** Modify `src/app.ts`, `src/config/rate-limit.ts`
@@ -220,7 +220,7 @@
 
 ---
 
-## Task 9: H9 — Fix Skip Path Matching (Exact URL vs Prefix)
+## Task 9: H9 - Fix Skip Path Matching (Exact URL vs Prefix)
 
 **Severity:** BAIXA  
 **Files:** Modify `src/config/rate-limit.ts`

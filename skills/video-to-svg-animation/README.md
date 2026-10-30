@@ -4,8 +4,8 @@
 [![Tested](https://img.shields.io/badge/fire%20test-passed-brightgreen)](#real-example-fire-test-🔥)
 
 An **agent skill** that recreates videos, GIFs or reference animations as **real,
-lightweight vector animations** — crisp at any size, no JavaScript required (SMIL),
-no embedded video — with an optional **GSAP pipeline** for web pages and organic
+lightweight vector animations** - crisp at any size, no JavaScript required (SMIL),
+no embedded video - with an optional **GSAP pipeline** for web pages and organic
 path morphing.
 
 **Not an automatic video converter:** the workflow traces the key artwork once and
@@ -18,16 +18,16 @@ quality loss.
 
 ## How it works (the pipeline)
 
-1. **Inspect the source** — `ffmpeg` extracts frames + a contact sheet; the agent
+1. **Inspect the source** - `ffmpeg` extracts frames + a contact sheet; the agent
    annotates the motion *beats* (streaks → line-drawing → fill → text → sparkles).
-2. **Trace the artwork** — `scripts/trace_colors.py` clusters the colours (k-means
+2. **Trace the artwork** - `scripts/trace_colors.py` clusters the colours (k-means
    via OpenCV) on the cleanest frame and exports vector contours as `shapes.json`.
    Small details (eyes, text) are hand-redrawn as clean curves.
-3. **Generate the animation** — a Python script emits the SVG with
+3. **Generate the animation** - a Python script emits the SVG with
    `scripts/smil_helpers.py` (`anim`, `kt`, `splines`), which keeps
    `keyTimes`/`keySplines` always consistent. One master duration `T`, every
    animation expressed as `(seconds, value)` pairs for a perfect loop.
-4. **Verify visually, ALWAYS** — `scripts/preview_svg.py` renders the SVG in a
+4. **Verify visually, ALWAYS** - `scripts/preview_svg.py` renders the SVG in a
    headless Chromium (Playwright), pauses the animation with `setCurrentTime` and
    screenshots key times. Vector animation is never judged from the code!
 5. **Deliver** the file (and the generator script, if the user may want to tweak it),
@@ -37,7 +37,7 @@ quality loss.
 
 | Pipeline | Best for | Trade-off |
 |---|---|---|
-| **SMIL** (default) | Standalone `.svg`, `<img>` tags, GitHub READMEs, e-mail — anywhere JS can't run | Organic path morphing requires hand-matched path states |
+| **SMIL** (default) | Standalone `.svg`, `<img>` tags, GitHub READMEs, e-mail - anywhere JS can't run | Organic path morphing requires hand-matched path states |
 | **GSAP + MorphSVG** | Web pages with inline SVG; interactive/scrub-able timelines; **organic path morphing** (free plugin since 2025) | Needs the library in the page; animation is lost inside `<img>`/sanitizers |
 
 See `SKILL.md` ("Output pipeline details" and "Organic path morphing") for the full
@@ -103,7 +103,7 @@ Input video: "Page Craft" chameleon logo, 4 s, 1280×720.
 | 4.0 s | text + golden sparkle burst |
 | 6.8 s | pastel fade → perfect loop |
 
-Colours traced automatically from the 2.4 s frame: `#da3835`, `#f2c422`, `#dd9926` — 27 vector shapes.
+Colours traced automatically from the 2.4 s frame: `#da3835`, `#f2c422`, `#dd9926` - 27 vector shapes.
 
 ## Included motion patterns
 
@@ -111,7 +111,7 @@ Colours traced automatically from the 2.4 s frame: `#da3835`, `#f2c422`, `#dd992
 - **Speed streaks** with acceleration easing
 - **Impact**: expanding circles, radial-gradient flash, sparks, screen shake
 - **3D particles / orbits** (positions computed in Python, `animateTransform`)
-- **Blink**, **group scale about its centre**, and more — all documented in `SKILL.md`
+- **Blink**, **group scale about its centre**, and more - all documented in `SKILL.md`
 - **Organic path morphing** via GSAP MorphSVG (see "Output pipelines")
 
 ## Notes
