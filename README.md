@@ -142,6 +142,15 @@ PRs welcome - especially:
 - **free-model reports** - which small model + which config finished a full pipeline?
 - **new showcase skills** in `skills/`
 
+## Credits & attribution
+
+The skills in [`skills/`](docs/SKILLS.md) are redistributions of public work
+from other authors and packs (Jeffallan/claude-skills, nextlevelbuilder/ui-ux-pro-max-skill,
+addyosmani/agent-skills, affaan-m/ecc, obra/superpowers, ClaudeKit, among others).
+Full per-skill attribution lives in [`skills/CREDITS.md`](skills/CREDITS.md) -
+the orchestrator routes to them, the authorship is theirs. If you spot a credit
+that is wrong or missing, open an issue.
+
 ## License
 
 MIT - see [LICENSE](LICENSE).

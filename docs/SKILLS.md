@@ -8,6 +8,10 @@ metadata). Drop the folder into your agent's skills directory and it becomes ava
 
 > To install: `cp -r skills/<name> ~/.config/opencode/skills/` (OpenCode) or your
 > agent's equivalent skills path.
+>
+> Authorship notice: these skills are redistributed from their original
+> authors and packs. The full attribution map (per skill) is
+> [skills/CREDITS.md](../skills/CREDITS.md).
 
 ## Core orchestration
 
