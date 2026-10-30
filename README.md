@@ -99,6 +99,20 @@ Want to run on a **free/open/local model** (DeepSeek · GLM · Qwen · Ollama)?
 Read [`docs/FREE-MODELS.md`](docs/FREE-MODELS.md) - the efficiency playbook written
 specifically for small-context models.
 
+### The author's current stack
+
+Everything in this repo - including the showcase - was planned, coded, reviewed
+and shipped **exclusively with free models**:
+
+- **GLM 5.3 Flash** (Z.ai)
+- **Nemotron Super** (NVIDIA)
+- **Nemotron Ultra 550B** (NVIDIA)
+- **Nemotron VL** (NVIDIA)
+- **Step 5 Preview** (StepFun)
+
+No paid frontier model was used in the pipeline. If you replicate it, report
+your stack.
+
 ## Routing map (excerpt)
 
 | Intent | Skill chain |

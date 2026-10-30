@@ -44,6 +44,13 @@ independent tool calls - fewer round trips, fewer inference calls on your free t
 | Local 8B | Qwen2.5-Coder-7B, Llama 3.1 8B | Ollama / LM Studio | Always invoke the orchestrator explicitly; keep requests small |
 | Local 70B+ | Qwen2.5-72B, Llama 3.3 70B | - | Handles multi-step chains natively; still skips no gates |
 
+### The author's live stack (2026-10)
+
+The showcase in `examples/rate-limiter/` and all repo docs were produced with free
+models only: **GLM 5.3 Flash**, **Nemotron Super**, **Nemotron Ultra 550B**,
+**Nemotron VL** and **Step 5 Preview**. Proof that the "cheapest model ships it"
+bar has already been cleared.
+
 ## 4. The demo as evidence
 
 `examples/rate-limiter/` was driven through the full pipeline
