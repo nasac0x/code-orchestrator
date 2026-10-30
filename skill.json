@@ -1,0 +1,39 @@
+{
+  "name": "code-orchestrator",
+  "description": "Orquestrador mestre de desenvolvimento de software. Ativa APENAS quando solicitado explicitamente (\"use code-orchestrator\") ou quando detecta tarefa de programação/debug/arquitetura. Não auto-ativa em conversas gerais. Roteia para skills especializadas: code-review, debugging, arquitetura, testes, segurança, refatoração, planejamento, documentação.",
+  "version": "1.0.0",
+  "author": "Nemotron 3 Ultra + User",
+  "license": "MIT",
+  "compatibility": "opencode",
+  "tags": ["orchestrator", "coding", "debugging", "architecture", "code-review", "testing", "security", "refactoring", "planning", "meta-skill"],
+  "activation": {
+    "mode": "manual",
+    "triggers": [
+      "use code-orchestrator",
+      "code-orchestrator:",
+      "implemente",
+      "debuggue",
+      "revise",
+      "arquiteture",
+      "refatore",
+      "teste",
+      "code review",
+      "pull request"
+    ]
+  },
+  "routes": {
+    "planning": ["requirements-review", "feature-forge", "implementation-plan", "writing-plans", "brainstorm"],
+    "architecture": ["architecture-review", "architecture-designer", "codebase-design", "api-and-interface-design", "api-designer", "microservices-architect", "domain-modeling"],
+    "implementation": ["tdd", "test-driven-development", "source-driven-development", "code-simplification"],
+    "debugging": ["trace-bug", "debugging-wizard", "debug", "debugging-and-error-recovery"],
+    "code-review": ["code-review-and-quality", "code-reviewer", "code_review", "oak-adversarial-review", "security-and-hardening", "security-reviewer"],
+    "testing": ["test-driven-development", "test-and-verify", "test-master", "verification-loop", "verify-completion"],
+    "security": ["security-and-hardening", "secure-code-guardian", "security-reviewer"],
+    "performance": ["performance-optimization", "database-optimizer", "postgres-pro", "sql-pro"],
+    "legacy": ["legacy-modernizer", "spec-miner", "architecture-review"],
+    "documentation": ["documentation-and-adrs", "code-documenter", "oak-update-docs"],
+    "delivery": ["oak-commit", "smart_commit", "verification-loop", "oak-runtime-verification", "oak-enrich-task"],
+    "handoff": ["handoff"],
+    "adversarial": ["grill", "doubt-driven-development", "the-fool"]
+  }
+}

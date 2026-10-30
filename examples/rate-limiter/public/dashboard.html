@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Limiter Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { background: #1a1a2e; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap: 16px; }
+    h1 { font-size: 1.5rem; font-weight: 600; }
+    .status { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .status-dot.connected { background: #22c55e; }
+    .status-dot.disconnected { background: #ef4444; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .card h3 { font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin-bottom: 8px; font-weight: 600; }
+    .card .value { font-size: 2.5rem; font-weight: 700; color: #111827; line-height: 1; }
+    .card .value.blocked { color: #ef4444; }
+    .card .value.allowed { color: #22c55e; }
+    .chart-container { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; height: 300px; }
+    .table-container { background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    th { background: #f9fafb; font-weight: 600; color: #374151; font-size: 0.875rem; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: #f9fafb; }
+    .ip-cell { font-family: monospace; font-size: 0.875rem; }
+    .count-badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+    .count-badge.requests { background: #dbeafe; color: #1e40af; }
+    .count-badge.blocks { background: #fee2e2; color: #991b1b; }
+    .loading { text-align: center; padding: 40px; color: #6b7280; }
+    .error { color: #ef4444; text-align: center; padding: 20px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } header { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Rate Limiter Dashboard</h1>
+      <div class="status">
+        <span id="redis-status-text">Conectando...</span>
+        <span id="redis-status-dot" class="status-dot"></span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Total de Requisições</h3>
+        <div class="value" id="total-requests">0</div>
+      </div>
+      <div class="card">
+        <h3>Permitidas (200)</h3>
+        <div class="value allowed" id="allowed-requests">0</div>
+      </div>
+      <div class="card">
+        <h3>Bloqueadas (429)</h3>
+        <div class="value blocked" id="blocked-requests">0</div>
+      </div>
+      <div class="card">
+        <h3>Taxa de Bloqueio</h3>
+        <div class="value" id="block-rate">0%</div>
+      </div>
+      <div class="card">
+        <h3>Buckets Ativos</h3>
+        <div class="value" id="active-buckets">0</div>
+      </div>
+      <div class="card">
+        <h3>Latência Média</h3>
+        <div class="value" id="avg-latency">0ms</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="latency-chart"></canvas>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th colspan="2">Top IPs por Requisições</th></tr>
+            <tr><th>IP</th><th>Count</th></tr>
+          </thead>
+          <tbody id="top-requests-body"></tbody>
+        </table>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th colspan="2">Top IPs por Bloqueios</th></tr>
+            <tr><th>IP</th><th>Count</th></tr>
+          </thead>
+          <tbody id="top-blocks-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let latencyChart = null;
+
+    async function fetchMetrics() {
+      try {
+        const res = await fetch('/api/metrics');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.error('Failed to fetch metrics:', err);
+        document.getElementById('redis-status-text').textContent = 'Erro na conexão';
+        document.getElementById('redis-status-dot').className = 'status-dot disconnected';
+        return null;
+      }
+    }
+
+    function updateDashboard(data) {
+      if (!data) return;
+
+      // Update cards
+      document.getElementById('total-requests').textContent = data.requests.total.toLocaleString();
+      document.getElementById('allowed-requests').textContent = data.requests.allowed.toLocaleString();
+      document.getElementById('blocked-requests').textContent = data.requests.blocked.toLocaleString();
+      document.getElementById('block-rate').textContent = (data.requests.blockRate * 100).toFixed(1) + '%';
+      document.getElementById('active-buckets').textContent = data.activeBuckets.toLocaleString();
+      document.getElementById('avg-latency').textContent = Math.round(data.latency.avg) + 'ms';
+
+      // Redis status
+      const dot = document.getElementById('redis-status-dot');
+      const text = document.getElementById('redis-status-text');
+      if (data.redis.connected) {
+        dot.className = 'status-dot connected';
+        text.textContent = 'Redis Conectado';
+      } else {
+        dot.className = 'status-dot disconnected';
+        text.textContent = 'Memória (sem Redis)';
+      }
+
+      // Latency chart
+      updateLatencyChart(data.latency);
+
+      // Top IPs tables
+      updateTopIPsTable('top-requests-body', data.topIPs.byRequests, 'requests');
+      updateTopIPsTable('top-blocks-body', data.topIPs.byBlocks, 'blocks');
+    }
+
+    function updateLatencyChart(latency) {
+      const ctx = document.getElementById('latency-chart').getContext('2d');
+      const labels = ['p50', 'p95', 'p99', 'Média'];
+      const values = [latency.p50, latency.p95, latency.p99, latency.avg];
+
+      if (!latencyChart) {
+        latencyChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Latência (ms)',
+              data: values,
+              backgroundColor: ['#3b82f6', '#f59e0b', '#ef4444', '#6b7280'],
+              borderRadius: 4,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: true, title: { display: true, text: 'ms' } }
+            }
+          }
+        });
+      } else {
+        latencyChart.data.datasets[0].data = values;
+        latencyChart.update();
+      }
+    }
+
+    function updateTopIPsTable(tbodyId, ips, type) {
+      const tbody = document.getElementById(tbodyId);
+      if (ips.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:#6b7280">Nenhum dado</td></tr>';
+        return;
+      }
+      tbody.innerHTML = ips.map(({ ip, count }) => `
+        <tr>
+          <td class="ip-cell">${escapeHtml(ip)}</td>
+          <td><span class="count-badge ${type === 'requests' ? 'requests' : 'blocks'}">${count}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    async function refresh() {
+      const data = await fetchMetrics();
+      updateDashboard(data);
+    }
+
+    // Initial load
+    refresh();
+
+    // Poll every 2 seconds
+    setInterval(refresh, 2000);
+  </script>
+</body>
+</html>

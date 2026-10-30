@@ -1,0 +1,24 @@
+{
+  "name": "rate-limiter-project",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "dotenv": "^16.4.5",
+    "ioredis": "^5.4.1",
+    "@fastify/static": "^7.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5",
+    "tsx": "^4.19.0"
+  }
+}

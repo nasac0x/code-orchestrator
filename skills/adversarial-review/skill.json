@@ -1,0 +1,33 @@
+{
+  "name": "adversarial-review",
+  "description": "Revisão adversarial profunda e isolada. Tenta REFUTAR o software (não confirmar). Executa Fase 0–8: isola, inventaria fronteiras, roda como produção, lê com perguntas de falha, compara promessa vs realidade, sonda hipóteses com scripts mínimos, classifica achados (COMPROVADO/HIPÓTESE/REFUTADO), emite relatório APROVADO/BLOQUEADO. Gatilho: toda tarefa que gere código executável. Contexto ISOLADO — sem acesso ao raciocínio do implementador. Máx. 2 rodadas.",
+  "version": "1.0.0",
+  "author": "Nemotron 3 Ultra + User",
+  "license": "MIT",
+  "compatibility": "opencode",
+  "tags": ["adversarial", "review", "security", "testing", "quality-gate", "red-team", "refutation"],
+  "activation": {
+    "mode": "manual",
+    "triggers": [
+      "adversarial-review",
+      "code-orchestrator: review",
+      "tente refutar",
+      "prove que falha"
+    ]
+  },
+  "phases": [
+    "isolate",
+    "inventory-boundaries",
+    "run-as-production",
+    "generate-hypotheses",
+    "promise-vs-reality",
+    "real-dependencies",
+    "probe-hypotheses",
+    "classify-findings",
+    "report"
+  ],
+  "maxRounds": 2,
+  "severityLevels": ["CRITICA", "ALTA", "MEDIA", "BAIXA"],
+  "findingLabels": ["COMPROVADO", "HIPOTESE", "REFUTADO"],
+  "verdicts": ["APROVADO", "BLOQUEADO"]
+}

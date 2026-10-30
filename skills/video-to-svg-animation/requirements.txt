@@ -1,0 +1,8 @@
+# Python dependencies for the scripts in this skill
+# pip install -r requirements.txt
+# Then, once:  playwright install chromium
+# System programs (not pip): ffmpeg + ffprobe  (apt install ffmpeg | brew install ffmpeg)
+opencv-python>=4.8
+numpy
+pillow
+playwright
