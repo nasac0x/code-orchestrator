@@ -33,7 +33,29 @@
     "legacy": ["legacy-modernizer", "spec-miner", "architecture-review"],
     "documentation": ["documentation-and-adrs", "code-documenter", "oak-update-docs"],
     "delivery": ["oak-commit", "smart_commit", "verification-loop", "oak-runtime-verification", "oak-enrich-task"],
+    "media": ["ffmpeg-skill"],
+    "browser": ["playwright-expert", "external:agent-browser"],
+    "diagram": ["open-design", "external:excalidraw-mcp"],
     "handoff": ["handoff"],
     "adversarial": ["grill", "doubt-driven-development", "the-fool"]
+  },
+  "external_tools": {
+    "note": "Prefixo 'external:' = ferramenta instalada no ambiente do agente, nao copiada no hub. Detalhes de instalacao e uso em docs/TOOLS.md.",
+    "agent-browser": {
+      "source": "https://github.com/vercel-labs/agent-browser",
+      "license": "Apache-2.0",
+      "install": "npm install -g agent-browser && agent-browser install",
+      "skills_propria": true
+    },
+    "excalidraw-mcp": {
+      "source": "https://github.com/excalidraw/excalidraw-mcp",
+      "license": "MIT",
+      "install": "MCP remote https://mcp.excalidraw.com (configurar nos mcpServers do agente)"
+    },
+    "ffmpeg-skill-mcp": {
+      "source": "https://github.com/kajisho5/ffmpeg-skill",
+      "license": "MIT",
+      "install": "npx ffmpeg-skill (skill copiada no hub em skills/ffmpeg-skill; MCP opcional)"
+    }
   }
 }

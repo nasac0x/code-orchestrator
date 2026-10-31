@@ -83,6 +83,14 @@ Source: https://github.com/obra/superpowers (MIT, by Jesse Vincent)
 
 Source of the original idea: https://github.com/anthropics/claude-plugins-official
 
+### kajisho5/ffmpeg-skill (MIT)
+
+- ffmpeg-skill: local video/audio editor for coding agents bundled at
+  `skills/ffmpeg-skill/` (42 tools with probe -> edit -> check -> look
+  verification workflow, machine-readable contract and optional MCP server).
+
+Source: https://github.com/kajisho5/ffmpeg-skill (MIT License, by kajisho5)
+
 ### This repository (Victor / @nasac0x)
 
 - code-orchestrator (the meta-skill itself, with NVIDIA Nemotron generation

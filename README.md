@@ -9,7 +9,7 @@ multi-discipline software engineering agent.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Made for OpenCode](https://img.shields.io/badge/Made%20for-OpenCode-6c5ce7)](https://opencode.ai)
-[![Skills](https://img.shields.io/badge/skills-122-blue)](docs/SKILLS.md)
+[![Skills](https://img.shields.io/badge/skills-123-blue)](docs/SKILLS.md)
 [![Free-model friendly](https://img.shields.io/badge/runs%20on-free%20%2F%20open%20LLMs-success)](docs/FREE-MODELS.md)
 [![Reddit](https://img.shields.io/badge/share-on%20Reddit-FF4500)](https://reddit.com/r/LocalLLaMA)
 
@@ -52,7 +52,7 @@ plans with free-tier models like DeepSeek, GLM, Qwen and local Ollama models.
                |
                v
      trace-bug -> debugging-wizard -> debug
-     (~2 skills loaded, not 122)
+     (~2 skills loaded, not 123)
 ```
 
 | Without orchestrator | With orchestrator |
@@ -69,7 +69,7 @@ plans with free-tier models like DeepSeek, GLM, Qwen and local Ollama models.
 ```
 code-orchestrator/
 ├── SKILL.md                 <- the orchestrator itself (start here)
-├── skills/                  <- 122 skills: the full "database" this router pulls from
+├── skills/                  <- 123 skills: the full "database" this router pulls from
 ├── examples/rate-limiter/   <- real project built and shipped with the orchestrator
 └── docs/                    <- deep dives (structure, index, free-models guide)
 ```
@@ -130,9 +130,11 @@ your stack.
 | review / PR | `code-review-and-quality` → `oak-adversarial-review` |
 | security | `secure-code-guardian` → `security-reviewer` |
 | performance | `database-optimizer` → `postgres-pro` |
+| media / browser / diagrams | `ffmpeg-skill` (bundled) · `agent-browser` + `excalidraw-mcp` (external, see [docs/TOOLS.md](docs/TOOLS.md)) |
 | commit / ship | `verify-completion` → `oak-commit` → `oak-update-docs` |
 
-Full map: [`SKILL.md`](SKILL.md) · Full index: [`docs/SKILLS.md`](docs/SKILLS.md)
+Full map: [`SKILL.md`](SKILL.md) · Full index: [`docs/SKILLS.md`](docs/SKILLS.md) ·
+External tools: [`docs/TOOLS.md`](docs/TOOLS.md)
 
 ## Contributing
 

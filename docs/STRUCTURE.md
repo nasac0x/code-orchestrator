@@ -8,7 +8,7 @@ code-orchestrator/
 │
 ├── README.md           # This repo's front door (start here)
 │
-├── skills/             # The skill database: 122 folders
+├── skills/             # The skill database: 123 folders
 │   ├── code-orchestrator/   # (canonical copy of the orchestrator)
 │   ├── tdd/                 # one folder = one skill = one SKILL.md (+ optional skill.json)
 │   ├── trace-bug/
@@ -22,8 +22,9 @@ code-orchestrator/
 │       └── ...
 │
 ├── docs/
-│   ├── SKILLS.md            # Full index of the 122 skills, by category
+│   ├── SKILLS.md            # Full index of the 123 skills, by category
 │   ├── FREE-MODELS.md       # Efficiency playbook for free/open/local models
+│   ├── TOOLS.md             # External tools routing (agent-browser, excalidraw-mcp, ffmpeg-skill)
 │   └── STRUCTURE.md         # (this file)
 │
 ├── LICENSE             # MIT

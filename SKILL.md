@@ -34,6 +34,9 @@ Em conversas gerais, acadêmicas, de análise de dados, design UI/UX, etc. - **p
 | **Handoff / troca de contexto** | `handoff` | "handoff", "trocar contexto", "pausar", "continuar depois" |
 | **Stack específica** | Skill correspondente (ex: `react-expert`, `nestjs-expert`, `golang-pro`, `rust-engineer`, etc.) | Menção explícita da tech stack |
 | **Design Gráfico / Visual** | `ui-ux-pro-max` → `design` → `ui-styling` → `design-system` → `banner-design` → `slides` → `brand` | "design gráfico", "visual design", "branding", "banner", "landing page", "dashboard visual", "design system", "apresentação", "slides", "UI kit", "style guide" |
+| **Mídia / Vídeo** | `ffmpeg-skill` (copiada no hub) + MCP do ffmpeg-skill quando disponível | "vídeo", "áudio", "mp4", "ffmpeg", "legenda", "transcrição", "Reels", "TikTok", "normalize", "mp3", "wav" |
+| **Browser automático** | Ferramentas externas: `agent-browser` (CLI, carrega skills própria conforme a versão) + skill `playwright-expert` do hub | "abrir página", "scraping", "teste E2E de UI", "screenshot", "selenium/playwright/agent-browser" |
+| **Diagramas / desenhos** | MCP externo: `excalidraw-mcp` | "desenha", "diagrama", "arquitetura visual", "excalidraw" |
 
 ---
 

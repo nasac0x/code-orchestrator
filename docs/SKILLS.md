@@ -1,4 +1,4 @@
-# Skill Index - 122 skills
+# Skill Index - 123 skills
 
 Every skill below lives in `skills/<name>/` in this repository. The orchestrator loads them
 **on demand**, one at a time - that's what keeps small/free models on track.
@@ -46,6 +46,9 @@ Backend: **nestjs-expert** · **fastapi-expert** · **django-expert** · **larav
 
 Frontend: **react-expert** · **react-native-expert** · **nextjs-developer** · **vue-expert** ·
 **vue-expert-js** · **angular-architect** · **flutter-expert** · **swift-expert**
+
+Media: **ffmpeg-skill** (bundled; local video/audio editing with 42 tools and a
+verify-after-render workflow, from https://github.com/kajisho5/ffmpeg-skill)
 
 General / tools: **typescript-pro** · **javascript-pro** · **python-pro** · **cpp-pro** ·
 **cli-developer** · **wordpress-pro** · **shopify-expert** · **playwright-expert** ·
@@ -121,7 +124,7 @@ convex-design · cpp-pro · csharp-developer · database-optimizer · debug ·
 debugging-and-error-recovery · debugging-wizard · design · design-system · devops-engineer ·
 django-expert · django-storages-s3 · documentation-and-adrs · domain-modeling ·
 dotnet-core-expert · doubt-driven-development · embedded-systems · fastapi-expert ·
-feature-forge · fidelity · fine-tuning-expert · flutter-expert · fullstack-guardian ·
+feature-forge · fidelity · ffmpeg-skill · fine-tuning-expert · flutter-expert ·
 game-developer · golang-pro · graphql-architect · grill · grilling · grill-me ·
 grill-with-docs · handoff · implementation-plan · iterative-retrieval · java-architect · javascript-pro · kotlin-specialist ·
 kubernetes-specialist · laravel-specialist · legacy-modernizer · mcp-developer ·
